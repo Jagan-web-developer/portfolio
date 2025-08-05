@@ -1,0 +1,624 @@
+<!-- Enhanced HTML, CSS & JS Animated Portfolio with Resume Download -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Jahan Developer </title>
+  <link rel="shortcut icon" href="media/WhatsApp Image 2025-08-02 at 13.57.26_11b73712.jpg" type="image/x-icon">
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(120deg, #1a1a1a, #0d0d0d);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      background: #121212;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      z-index: 1000;
+      box-shadow: 0 0 10px #000;
+    }
+    nav .logo {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.5rem;
+      color: rgb(0, 149, 255);
+    }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      width: 0%;
+      height: 2px;
+      background: rgb(0, 217, 255);
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      transition: 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .hero {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 2rem 3rem;
+      position: relative;
+      animation: fadeIn 2s ease-in-out;
+    }
+    .hero .intro {
+      max-width: 600px;
+      animation: slideRight 1.5s ease-out;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+    }
+    .hero h1 span {
+      color: rgb(0, 217, 255);
+    }
+    .hero img {
+      max-width: 400px;
+      border-radius: 20px;
+      animation: float 4s ease-in-out infinite, fadeInUp 2s ease;
+      box-shadow: 0 0 40px rgba(0, 55, 255, 0.491);
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideRight {
+      from { transform: translateX(-100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    section {
+      padding: 4rem 3rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: #1e1e1e;
+      border-radius: 15px;
+      padding: 1.5rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgb(0, 174, 255);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      background: linear-gradient(120deg, rgba(0, 170, 255, 0.1), transparent);
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #0d0d0d;
+      color: #777;
+    }
+    .btn {
+      margin-top: 1rem;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: rgb(0, 149, 255);
+      color: #181817;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgb(0, 149, 255);
+    }
+    .resume-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #444;
+      color: #fff;
+      border: 2px solid rgb(0, 149, 255);
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+      background: rgb(0, 149, 255);
+      color: #151514;
+      box-shadow: 0 0 10px rgb(0, 149, 255);
+    }
+/* scl deatils */
+#education {
+  padding: 4rem 3rem;
+  background: #111;
+  animation: fadeIn 1.5s ease-in;
+}
+
+#education h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: rgb(0, 149, 255);
+}
+
+.edu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.edu-card {
+  background: #1d1d1d;
+  padding: 2rem;
+  border-left: 5px solid rgb(0, 149, 255);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgb(2, 154, 243);
+  transform: translateY(50px);
+  opacity: 0;
+  animation: fadeSlide 1s ease forwards;
+}
+
+.edu-card:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeSlide {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* mobile and laptop view  */
+/* Medium Devices (Tablets and Small Laptops) */
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .hero img {
+    max-width: 80%;
+    margin-top: 2rem;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* Small Devices (Phones) */
+@media (max-width: 600px) {
+  nav .logo {
+    font-size: 1.2rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .btn,
+  .resume-btn {
+    width: 80%;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 3rem 1.5rem;
+  }
+
+  #education h2,
+  #projects h2,
+  #about h2,
+  #contact h2 {
+    font-size: 2rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+  }
+
+}
+
+/* form details */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 2rem auto;
+  gap: 1rem;
+  padding: 2rem;
+  background: #1b1b1b;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
+}
+
+form input,
+form textarea {
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  font-size: 1rem;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: 2px solid rgb(0, 217, 255);
+  background: #000;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* whastapp code  */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(5, 5, 5);
+    transition: transform 0.3s ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  .whatsapp-float img {
+    width: 50px;
+    height: 50px;
+  }
+
+  @media (max-width: 600px) {
+    .whatsapp-float {
+      width: 30px;
+      height: 30px;
+      bottom: 15px;
+      right: 15px;
+    }
+
+    .whatsapp-float img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  </style>
+
+</head>
+<body>
+  <nav>
+    <div class="logo"><h3>Jahannathan</h3></div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="intro">
+      <h1>Hi There, I Am <span id="typed"></span></h1>
+      <p>Creative Front-End Developer focused on building stunning and performant UIs.</p>
+      <a class="btn" href="#projects">View Works</a><br>
+      <a class="resume-btn" href="media/MCA RESUME.pdf" download>Download Resume</a>
+    </div>
+    <img src="media/WhatsApp Image 2025-05-02 at 17.24.14_14b10968.jpg" alt="Profile Photo" />
+  </section>
+
+  <!-- scl deatils -->
+   <section id="education">
+  <h2>Education</h2>
+  <div class="edu-container">
+    <div class="edu-card">
+     <h3>🎓 High School:-</h3>
+     <br>
+      <p><strong>School:</strong> Orintal Hr. Sec. School</p>
+      <br>
+      <p><strong>Year:</strong> 2017 - 2018</p>
+      <br>
+      <p><strong>Percentage:</strong> 80%</p>
+    </div>
+    <div class="edu-card">
+      <h3>🏫 College (UG):-</h3>
+      <br>
+      <p><strong>Institution:</strong> Navalar Na. Mu. Venkatasamy Nattar
+ Thiruvarul College  </p>
+ <br>
+      <p><strong>Degree:</strong>  Bachelor of Computer Application (BCA)</p>
+      <br>
+      <p><strong>Year:</strong> 2021 - 2023</p>
+      <br>
+      <p><strong>parcentage:</strong> 87.57</p>
+    </div>
+    <div class="edu-card">
+      <h3>🏫 College (PG):- </h3>
+      <br>
+      <p><strong>Institution:</strong> Adaikala Matha College</p>
+      <br>
+      <p><strong>Degree:</strong> Master of Computer Application (MCA)</p>
+      <br>
+      <p><strong>Year:</strong> 2023 - 2025</p>
+      <br>
+      <p><strong>parcentage:</strong> 88</p>
+    </div>
+  </div>
+</section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <br>
+    <div class="projects">
+      <div class="card" ><a href="">Portfolio Website </a></div>
+      <div class="card">Face Attendence </div>
+      <div class="card">Wearher Dashbord</div>
+      <div class="card">Habit Tracker</div>
+      <div class="card">Animated Resume Page</div>
+    </div>
+
+  </section>
+ 
+
+
+  <section id="about">
+    <h2>About Me</h2>
+    <br>
+    <p>I specialize in crafting interactive websites and  animations using HTML, CSS, and JavaScript. I love pushing visual boundaries while maintaining clean and responsive code structure.</p>
+  </section>
+
+  <section >
+    <h2>Contact</h2>
+    <br>
+    <p>Email: janajahan7@gmail.com</p>
+    <p>Phone no: 6383169622</p>
+  </section>
+
+  <section id="contact">
+  <!-- <h2></h2> -->
+   <!-- action="https://formspree.io/f/your-form-id" -->
+  <form class="fade-in"   id="myform"> 
+    <input type="text" name="name" placeholder="Your Name" id="uname" required />
+    <input type="email" name="email" placeholder="Your Email" id="umail" required />
+    <textarea name="message" placeholder="Your Message" rows="5" id="umsg" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+</section>
+
+  <footer>
+    ©  Portfolio created  Jahannathan 2025. 
+   <!-- WhatsApp Floating Button (Responsive) -->
+<a href="https://wa.me/916383169622" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+</a>
+
+  </footer>
+
+
+
+
+
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+  <script>
+// document.getElementById("myform").addEventListener("submit", function(event) {
+//     event.preventDefault(); 
+  
+
+//     let username = document.getElementById('uname').value;
+//       let usermail = document.getElementById('umail').value;
+//       let usermessage = document.getElementById('umsg').value;
+//       console.log(username);
+//       console.log(usermail);
+//       console.log(usermessage);
+//     alert("Form submission prevented!");
+//   });
+
+
+
+  // Initialize EmailJS
+  (function () {
+    emailjs.init({
+        publicKey: "tC7ENKParhjUmV9W0",
+      });
+  })();
+
+  // Form submission
+  document.getElementById("myform").addEventListener("submit", function (e) {
+    e.preventDefault(); // prevent default form submit
+
+    const name = document.getElementById("uname").value;
+    const email = document.getElementById("umail").value;
+    const message = document.getElementById("umsg").value;
+    const time = new Date().toLocaleString();
+
+    // Prepare template params
+    const templateParams = {
+      name: name,
+      email: email,
+      message: message,
+      time: time,
+    };
+
+    // Send Email
+    emailjs
+      .send("service_bgmc2wc", "template_7demwoz", templateParams)
+      .then(
+        function (response) {
+          console.log("SUCCESS!", response.status, response.text);
+          alert("Message sent successfully!");
+          document.getElementById("myform").reset(); // clear form
+        },
+        function (error) {
+          console.log("FAILED...", error);
+          alert("Message failed to send. Please try again.");
+        }
+      );
+  });
+   
+
+
+    // Typing Animation
+    const roles = ["Jahannathan","a Web Developer", "a Frontend Developer", "best animaton lavel developer"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    const typedEl = document.getElementById("typed");
+
+    function typeEffect() {
+      if (charIndex < roles[roleIndex].length) {
+        typedEl.textContent += roles[roleIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect, 100);
+      } else {
+        setTimeout(() => {
+          typedEl.textContent = "";
+          charIndex = 0;
+          roleIndex = (roleIndex + 1) % roles.length;
+          typeEffect();
+        }, 1500);
+      }
+    }
+    typeEffect();
+
+    // scl deatils
+    // Animate education cards on scroll
+const eduCards = document.querySelectorAll('.edu-card');
+const revealEduCards = () => {
+  eduCards.forEach((card) => {
+    const cardTop = card.getBoundingClientRect().top;
+    if (cardTop < window.innerHeight - 100) {
+      card.classList.add("visible");
+    }
+  });
+};
+window.addEventListener("scroll", revealEduCards);
+revealEduCards();
+
+
+    // Scroll Reveal Effect
+    const allSections = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      allSections.forEach((section) => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < window.innerHeight - 100) {
+          section.classList.add("visible");
+        }
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+    // form deatils
+    // Animate contact form on scroll
+const fadeItems = document.querySelectorAll('.fade-in');
+const revealFade = () => {
+  fadeItems.forEach((el) => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add("visible");
+    }
+  });
+};
+window.addEventListener("scroll", revealFade);
+revealFade();
+
+  </script>
+</body>
+</html>
